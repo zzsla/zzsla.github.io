@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title | escape }} · zzsla</title>
+<link rel="icon" href="{{ '/assets/favicon.png' | relative_url }}" type="image/png">
+<link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+<main class="article-page">
+  <a href="{{ '/' | relative_url }}">← 검색 홈</a>
+  <article class="markdown-body">
+    <h1>{{ page.title | escape }}</h1>
+    {{ content }}
+  </article>
+</main>
+</html>
