@@ -28,7 +28,7 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
       - run: ruby scripts/stage.rb .pages-source
-      - run: bundle exec jekyll build --source .pages-source --destination _site
+      - run: bundle exec jekyll build --source .pages-source --destination _site --baseurl ""
         env:
           JEKYLL_ENV: production
       - uses: actions/upload-pages-artifact@v4
