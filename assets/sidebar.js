@@ -38,7 +38,7 @@ function renderSidebar(posts) {
     const icon = document.createElement("span");
     icon.className = "file-icon";
     icon.setAttribute("aria-hidden", "true");
-    link.href = postLink(post);
+    link.href = post.url;
     link.append(icon, post.title);
     item.append(link);
     parent.append(item);

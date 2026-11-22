@@ -224,7 +224,7 @@ details[open] > summary .folder-mark::after {
 
 .article-page {
   width: min(100% - 2rem, 44rem);
-  margin: clamp(2rem, 10vh, 7rem) auto;
+  margin: clamp(5rem, 10vh, 7rem) auto;
   padding-bottom: 3rem;
 }
 .markdown-body { overflow-wrap: anywhere; }

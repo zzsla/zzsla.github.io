@@ -218,7 +218,7 @@ function zoomAt(factor, px = 0, py = 0) {
 }
 
 function showGraph(open) {
-  home.hidden = open;
+  document.querySelector(".search-home, .article-page").hidden = open;
   graphView.hidden = !open;
   graphToggle.setAttribute("aria-pressed", String(open));
   graphBrand.disabled = !open;
