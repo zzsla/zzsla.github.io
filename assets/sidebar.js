@@ -49,6 +49,38 @@ function renderSidebar(posts) {
 }
 
 const sidebarStateKey = "zzsla.sidebar-open";
+const folderStateKey = "zzsla.open-folders";
+
+function saveOpenFolders() {
+  const paths = Array.from(sidebar.querySelectorAll("details[open] > summary[data-folder]"),
+    summary => summary.dataset.folder);
+  try {
+    sessionStorage.setItem(folderStateKey, JSON.stringify(paths));
+  } catch {
+    // Keep navigation working when browser storage is unavailable.
+  }
+}
+
+function restoreOpenFolders() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(folderStateKey) || "[]");
+    if (!Array.isArray(saved)) return;
+    const paths = new Set(saved.filter(path => typeof path === "string"));
+    for (const summary of sidebar.querySelectorAll("summary[data-folder]")) {
+      summary.parentElement.open = paths.has(summary.dataset.folder);
+    }
+  } catch {
+    // Ignore unavailable storage or invalid saved data.
+  }
+}
+
+// Toggle does not bubble; capture also catches nested folders and graph resets.
+sidebar.addEventListener("toggle", saveOpenFolders, true);
+// Save synchronously before following a post link or leaving the page.
+sidebar.addEventListener("click", event => {
+  if (event.target.closest("a[href]")) saveOpenFolders();
+}, true);
+window.addEventListener("pagehide", saveOpenFolders);
 
 function setSidebarOpen(open) {
   sidebar.hidden = !open;
@@ -72,6 +104,7 @@ document.addEventListener("keydown", event => {
 });
 
 renderSidebar(searchIndex);
+restoreOpenFolders();
 try {
   setSidebarOpen(sessionStorage.getItem(sidebarStateKey) === "true");
 } catch {
