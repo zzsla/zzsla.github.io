@@ -48,12 +48,19 @@ function renderSidebar(posts) {
   emptyFiles.hidden = !fileList.hidden;
 }
 
+const sidebarStateKey = "zzsla.sidebar-open";
+
 function setSidebarOpen(open) {
   sidebar.hidden = !open;
   document.querySelector(".graph-toggle").hidden = !open;
   sidebarToggle.setAttribute("aria-expanded", String(open));
   sidebarToggle.setAttribute("aria-label", open ? "파일 탐색기 닫기" : "파일 탐색기 열기");
   document.body.classList.toggle("sidebar-open", open);
+  try {
+    sessionStorage.setItem(sidebarStateKey, String(open));
+  } catch {
+    // Navigation still works when browser storage is unavailable.
+  }
 }
 
 sidebarToggle.addEventListener("click", () => setSidebarOpen(sidebar.hidden));
@@ -65,3 +72,8 @@ document.addEventListener("keydown", event => {
 });
 
 renderSidebar(searchIndex);
+try {
+  setSidebarOpen(sessionStorage.getItem(sidebarStateKey) === "true");
+} catch {
+  setSidebarOpen(false);
+}
