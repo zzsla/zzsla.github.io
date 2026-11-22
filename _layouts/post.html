@@ -1,15 +1,48 @@
 <!doctype html>
 <html lang="ko">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.title | escape }} · zzsla</title>
 <link rel="icon" href="{{ '/assets/favicon.png' | relative_url }}" type="image/png">
 <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+<script defer src="{{ '/assets/search-index.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/sidebar.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/graph.js' | relative_url }}"></script>
+</head>
+<body>
+<button type="button" class="sidebar-toggle" aria-label="파일 탐색기 열기"
+        aria-controls="file-sidebar" aria-expanded="false">
+  <span class="sidebar-icon" aria-hidden="true"></span>
+</button>
+<button type="button" class="graph-toggle" aria-label="그래프 뷰" aria-pressed="false"
+        aria-controls="graph-view" hidden>
+  <span class="graph-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+</button>
+<aside id="file-sidebar" class="sidebar" aria-label="파일 탐색기" hidden>
+  <nav aria-label="글 목록" class="file-list">
+    <p class="empty-files">아직 글이 없어요.</p>
+    <ul hidden></ul>
+  </nav>
+</aside>
+<header class="site-brand"><button type="button" class="wordmark" disabled>zzsla</button></header>
 <main class="article-page">
-  <a href="{{ '/' | relative_url }}">← 검색 홈</a>
+  <a href="{{ '/' | relative_url }}">검색 홈</a>
   <article class="markdown-body">
     <h1>{{ page.title | escape }}</h1>
     {{ content }}
   </article>
 </main>
+<main id="graph-view" class="graph-view" aria-label="글 연결 그래프" hidden>
+  <p class="graph-empty" hidden>표시할 글이 없어요.</p>
+  <div class="graph-plot" tabindex="0" aria-label="그래프. 방향키로 이동하고 더하기와 빼기로 확대하거나 축소합니다.">
+    <canvas aria-hidden="true"></canvas>
+    <div class="graph-nodes"></div>
+  </div>
+  <div class="graph-menu" hidden>
+    <a>글 열기</a>
+    <button type="button">이 글 주변만 보기</button>
+  </div>
+</main>
+</body>
 </html>
